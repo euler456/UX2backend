@@ -1,1 +1,1 @@
-web: vendor/bin/heroku-php-apache2  src/
+echo 'web: heroku-php-apache2 api/' > Procfile
