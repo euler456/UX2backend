@@ -21,7 +21,7 @@ $session = new Session(new NativeSessionStorage(), new AttributeBag());
 $response->headers->set('Content-Type', 'application/json');
 $response->headers->set('Access-Control-Allow-Headers', 'origin, content-type, accept');
 $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-$response->headers->set('Access-Control-Allow-Origin', 'https://ux2backend.herokuapp.com/');
+$response->headers->set('Access-Control-Allow-Origin', 'https://ux2website.herokuapp.com/');
 $response->headers->set('Access-Control-Allow-Credentials', 'true');
 //put session here because here is the place the action started
 $session->start();
@@ -39,7 +39,7 @@ if (empty($request->query->all())) {
     }
     //if the request is post , the code will start the action which is in the POST Block
     if ($request->getMethod() == 'POST') {             // register
-        if ($request->query->get('action') == 'register') {
+        if ($request->query->getAlpha('action') == 'register') {
             if ($request->request->has('username')) {
                 $res = $sqsdb->userExists($request->request->get('username'));
                 if ($res) {
@@ -73,9 +73,9 @@ if (empty($request->query->all())) {
             } else {
                 $response->setStatusCode(400);
             }
-        } elseif ($request->query->get('action') == 'login') {
+        } elseif ($request->query->getAlpha('action') == 'login') {
             $res = $session->get('sessionObj')->logEvent('login');
-            echo("hello");
+           // echo("hello");
             if ($request->request->has('username') and $request->request->has('password')) {
                 $res = $session->get('sessionObj')->login(
                     $request->request->get('username'),
@@ -95,7 +95,7 @@ if (empty($request->query->all())) {
                 $response->setContent(json_encode($request));
                 $response->setStatusCode(404);
             }
-        } elseif ($request->query->get('action') == 'isloggedin') {
+        } elseif ($request->query->getAlpha('action') == 'isloggedin') {
             $res = $session->get('sessionObj')->isLoggedIn();
             if ($res == false) {
                 $response->setStatusCode(403);
@@ -103,7 +103,7 @@ if (empty($request->query->all())) {
                 $response->setStatusCode(203);
                 $response->setContent(json_encode($res));
             }
-        } elseif ($request->query->get('action') == 'update') {
+        } elseif ($request->query->getAlpha('action') == 'update') {
             $res = $session->get('sessionObj')->logEvent('update');
             $res = $session->get('sessionObj')->isLoggedIn();
             if (($request->request->has('username')) && (count($res) == 1)) {
@@ -123,7 +123,7 @@ if (empty($request->query->all())) {
                     ) {
                         $res = $session->get('sessionObj')->update(
                             //    $res = $sqsdb->userid($request->request->get('currentusername')),
-                            $request->request->get('username'),
+                            $request->request->getAlpha('username'),
                             $request->request->get('email'),
                             $request->request->get('phone'),
                             $request->request->get('postcode'),
@@ -142,12 +142,12 @@ if (empty($request->query->all())) {
             } else {
                 $response->setStatusCode(402);
             }
-        } elseif ($request->query->get('action') == 'displayorderfood') {
+        } elseif ($request->query->getAlpha('action') == 'displayorderfood') {
             $res = $session->get('sessionObj')->displayorder();
             echo("hello");
             return $res;
             $response->setStatusCode(400);
-        } elseif ($request->query->get('action') == 'orderdelete') {
+        } elseif ($request->query->getAlpha('action') == 'orderdelete') {
             $res = $session->get('sessionObj')->logEvent('orderdelete');
             $res = $session->get('sessionObj')->orderdelete(
                 $request->request->get('orderitem_ID')
@@ -159,7 +159,7 @@ if (empty($request->query->all())) {
             } elseif ($res === 0) {
                 $response->setStatusCode(500);
             }
-        } elseif ($request->query->get('action') == 'orderquantity') {
+        } elseif ($request->query->getAlpha('action') == 'orderquantity') {
             $res = $session->get('sessionObj')->logEvent('orderthefood');
             if (
                 $request->request->has('F_ID') and
@@ -185,11 +185,11 @@ if (empty($request->query->all())) {
             } else {
                 $response->setStatusCode(400);
             }
-        } elseif ($request->query->get('action') == 'displayfood') {
+        } elseif ($request->query->getAlpha('action') == 'displayfood') {
             $res = $session->get('sessionObj')->display();
             return $res;
             $response->setStatusCode(400);
-        } elseif ($request->query->get('action') == 'addfood') {
+        } elseif ($request->query->getAlpha('action') == 'addfood') {
             if (
                 $request->request->has('foodname') and
                 $request->request->has('price')   and
@@ -215,7 +215,7 @@ if (empty($request->query->all())) {
             } else {
                 $response->setStatusCode(400);
             }
-        } elseif ($request->query->get('action') == 'deleteFOOD') {
+        } elseif ($request->query->getAlpha('action') == 'deleteFOOD') {
             $res = $session->get('sessionObj')->deleteFOOD(
                 $request->request->get('F_ID')
             );
@@ -226,7 +226,7 @@ if (empty($request->query->all())) {
             } elseif ($res === 0) {
                 $response->setStatusCode(500);
             }
-        } elseif ($request->query->get('action') == 'updatefood') {
+        } elseif ($request->query->getAlpha('action') == 'updatefood') {
             if (
                 $request->request->has('F_ID') and
                 $request->request->has('foodname') and
@@ -253,7 +253,7 @@ if (empty($request->query->all())) {
             } else {
                 $response->setStatusCode(400);
             }
-        } elseif ($request->query->get('action') == 'createorder') {
+        } elseif ($request->query->getAlpha('action') == 'createorder') {
             $res = $session->get('sessionObj')->isLoggedIn();
             if ($res == false) {
                 $response->setStatusCode(403);
@@ -269,7 +269,7 @@ if (empty($request->query->all())) {
                     $response->setStatusCode(400);
                 }
             }
-        } elseif ($request->query->get('action') == 'checkout') {
+        } elseif ($request->query->getAlpha('action') == 'checkout') {
             $res = $session->get('sessionObj')->logEvent('checkout');
             $res = $session->get('sessionObj')->checkout(
                 $request->request->get('cname'),
@@ -285,7 +285,7 @@ if (empty($request->query->all())) {
             } elseif ($res === 0) {
                 $response->setStatusCode(500);
             }
-        } elseif ($request->query->get('action') == 'checkoutupdate') {
+        } elseif ($request->query->getAlpha('action') == 'checkoutupdate') {
             $res = $session->get('sessionObj')->checkoutupdate($request->request->get('orderID'));
             if ($res === true) {
                 $response->setStatusCode(201);
@@ -300,7 +300,7 @@ if (empty($request->query->all())) {
     }
     //if the request from the front-end JS is GET , the code will start the action which is in the GET Block
     if ($request->getMethod() == 'GET') {
-        if ($request->query->get('action') == 'accountexists') {
+        if ($request->query->getAlpha('action') == 'accountexists') {
             if ($request->query->has('username')) {
                 $res = $sqsdb->userExists($request->query->get('username'));
                 if ($res) {
@@ -309,13 +309,13 @@ if (empty($request->query->all())) {
                     $response->setStatusCode(204);
                 }
             }
-        } elseif ($request->query->get('action') == 'logout') {
+        } elseif ($request->query->getAlpha('action') == 'logout') {
             $res = $session->get('sessionObj')->logEvent('logout');
             $session->get('sessionObj')->logout();
             $response->setStatusCode(200);
-        } elseif ($request->query->get('action') == 'orderID') {
+        } elseif ($request->query->getAlpha('action') == 'orderID') {
             $res = $session->get('sessionObj')->orderID();
-        } elseif ($request->query->get('action') == 'sumtotalprice') {
+        } elseif ($request->query->getAlpha('action') == 'sumtotalprice') {
             $res = $session->get('sessionObj')->logEvent('complete order');
             $res = $session->get('sessionObj')->sumtotalprice();
             if ($res === true) {
@@ -327,11 +327,11 @@ if (empty($request->query->all())) {
             } else {
                 $response->setStatusCode(418);
             }
-        } elseif ($request->query->get('action') == 'showorderform') {
+        } elseif ($request->query->getAlpha('action') == 'showorderform') {
             $res = $session->get('sessionObj')->showorderform();
             echo("hello");
             return $res;
-        } elseif ($request->query->get('action') == 'confirmorderform') {
+        } elseif ($request->query->getAlpha('action') == 'confirmorderform') {
             $res = $session->get('sessionObj')->confirmorderform();
         }
     }
