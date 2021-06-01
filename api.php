@@ -1,4 +1,5 @@
 <?php
+echo("success");
 include_once("core.php");
 require_once('./vendor/autoload.php');
 require_once('./se.php');
