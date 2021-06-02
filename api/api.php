@@ -304,9 +304,7 @@ if (empty($request->query->all())) {
         }
     }
     //if the request from the front-end JS is GET , the code will start the action which is in the GET Block
-    if ($request->getMethod() == 'GET') {
-        echo ("use13r") ;
-        die;       
+    if ($request->getMethod() == 'GET') {     
         if ($request->query->getAlpha('action') == 'accountexists') {
             if ($request->query->has('username')) {
                 $res = $sqsdb->userExists($request->query->get('username'));
@@ -317,9 +315,10 @@ if (empty($request->query->all())) {
                 }
             }
         } elseif ($request->query->getAlpha('action') == 'logout') {
+            echo ("use13r") ;
+            die;  
             $res = $session->get('sessionObj')->logEvent('logout');
             $session->get('sessionObj')->logout();
-            echo("hello");
             $response->setStatusCode(200);
         } elseif ($request->query->getAlpha('action') == 'orderID') {
             $res = $session->get('sessionObj')->orderID();
