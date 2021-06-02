@@ -80,7 +80,7 @@ if (empty($request->query->all())) {
             }
         } elseif ($request->query->getAlpha('action') == 'login') {
             echo("hello");
-            $res = $session->get('sessionObj')->logEvent('login');
+            //$res = $session->get('sessionObj')->logEvent('login');
           
             if ($request->request->has('username') and $request->request->has('password')) {
                 $res = $session->get('sessionObj')->login(
