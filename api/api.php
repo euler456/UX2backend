@@ -27,7 +27,6 @@ $response->headers->set('Access-Control-Allow-Credentials', 'true');
 //put session here because here is the place the action started
 ini_set('session.cookie_samesite',"None");
 ini_set('session.cookie_secure', "1");
-ini_set('session.cookie_httponly', "1"); 
 $session->start();
 
 if (!$session->has('sessionObj')) {
