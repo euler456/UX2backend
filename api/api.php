@@ -44,6 +44,7 @@ if (empty($request->query->all())) {
     //if the request is post , the code will start the action which is in the POST Block
     if ($request->getMethod() == 'POST') {  
            // register
+           echo("hello");
         if ($request->query->getAlpha('action') == 'register') {
             if ($request->request->has('username')) {
                 $res = $sqsdb->userExists($request->request->get('username'));
@@ -79,8 +80,8 @@ if (empty($request->query->all())) {
                 $response->setStatusCode(400);
             }
         } elseif ($request->query->getAlpha('action') == 'login') {
-            echo("hello");
-            //$res = $session->get('sessionObj')->logEvent('login');
+           
+            $res = $session->get('sessionObj')->logEvent('login');
           
             if ($request->request->has('username') and $request->request->has('password')) {
                 $res = $session->get('sessionObj')->login(
