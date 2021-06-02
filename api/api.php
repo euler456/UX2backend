@@ -1,12 +1,11 @@
 <?php
 
 include_once("./core.php");
-echo("success");
-die;
-require_once('./vendor/autoload.php');
+require_once('/api/vendor/autoload.php');
 require_once('./se.php');
 require_once('./userfunction.php');
-
+echo("success");
+die;
 //sqsuser is from the userfunction.php which represent database
 $sqsdb = new sqsuser;
 
