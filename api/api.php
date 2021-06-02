@@ -6,7 +6,8 @@ require_once('./se.php');
 require_once('./userfunction.php');
 //sqsuser is from the userfunction.php which represent database
 $sqsdb = new sqsuser;
-
+echo $response ;
+die;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -24,8 +25,7 @@ $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE,
 $response->headers->set('Access-Control-Allow-Origin', 'https://ux2backend.herokuapp.com/');
 $response->headers->set('Access-Control-Allow-Credentials', 'true');
 //put session here because here is the place the action started
-echo $response ;
-die;
+
 $session->start();
 if (!$session->has('sessionObj')) {
     $session->set('sessionObj', new sqsSession);
