@@ -30,8 +30,7 @@ $session->start();
 if (!$session->has('sessionObj')) {
     $session->set('sessionObj', new sqsSession);
 }
-echo ("use1r") ;
-die;
+
 if (empty($request->query->all())) {
     $response->setStatusCode(400);
 } elseif ($request->cookies->has('PHPSESSID')) {
@@ -40,7 +39,11 @@ if (empty($request->query->all())) {
     }
     if ($session->get('sessionObj')->day_rate_limited()) {
         $response->setStatusCode(429);
+
     }
+
+    echo ("use4r") ;
+die;
     //if the request is post , the code will start the action which is in the POST Block
     if ($request->getMethod() == 'POST') {             // register
         if ($request->query->getAlpha('action') == 'register') {
