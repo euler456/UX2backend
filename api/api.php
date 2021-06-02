@@ -41,11 +41,9 @@ if (empty($request->query->all())) {
         $response->setStatusCode(429);
 
     }
-
-    echo ("use4r") ;
-die;
     //if the request is post , the code will start the action which is in the POST Block
-    if ($request->getMethod() == 'POST') {             // register
+    if ($request->getMethod() == 'POST') {  
+           // register
         if ($request->query->getAlpha('action') == 'register') {
             if ($request->request->has('username')) {
                 $res = $sqsdb->userExists($request->request->get('username'));
@@ -307,6 +305,8 @@ die;
     }
     //if the request from the front-end JS is GET , the code will start the action which is in the GET Block
     if ($request->getMethod() == 'GET') {
+        echo ("use13r") ;
+        die;       
         if ($request->query->getAlpha('action') == 'accountexists') {
             if ($request->query->has('username')) {
                 $res = $sqsdb->userExists($request->query->get('username'));
