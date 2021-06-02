@@ -7,8 +7,7 @@ require_once('./userfunction.php');
 
 //sqsuser is from the userfunction.php which represent database
 $sqsdb = new sqsuser;
-echo ("user") ;
-die;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -19,7 +18,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 $request = Request::createFromGlobals();
 $response = new Response();
 $session = new Session(new NativeSessionStorage(), new AttributeBag());
-
+echo ("user") ;
+die;
 $response->headers->set('Content-Type', 'application/json');
 $response->headers->set('Access-Control-Allow-Headers', 'origin, content-type, accept');
 $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
