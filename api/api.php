@@ -316,9 +316,8 @@ if (empty($request->query->all())) {
             }
         } elseif ($request->query->getAlpha('action') == 'logout') {
            
-            $res = $session->get('sessionObj')->logEvent('logout');
-            echo ("use13r") ;
-            die;  
+           // $res = $session->get('sessionObj')->logEvent('logout');
+           
             $session->get('sessionObj')->logout();
             $response->setStatusCode(200);
            
