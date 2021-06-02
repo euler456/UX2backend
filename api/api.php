@@ -25,12 +25,12 @@ $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE,
 $response->headers->set('Access-Control-Allow-Origin', 'https://ux2website.herokuapp.com');
 $response->headers->set('Access-Control-Allow-Credentials', 'true');
 //put session here because here is the place the action started
-
+echo("hello");
 $session->start();
 if (!$session->has('sessionObj')) {
     $session->set('sessionObj', new sqsSession);
 }
-
+echo("hello");
 if (empty($request->query->all())) {
     $response->setStatusCode(400);
 } elseif ($request->cookies->has('PHPSESSID')) {
