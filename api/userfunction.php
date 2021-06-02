@@ -9,8 +9,7 @@ class sqsuser
     {
      //here to connect the database in the computer
         $dbURI = 'mysql:host=' . 'us-cdbr-east-04.cleardb.com' . ';port=3306;dbname=' . 'heroku_be04d0b5c2244ab';
-    echo $dbURI ;
-    die;
+   
         $this->dbconn = new PDO($dbURI, 'b48b00a18bfa2e', '1964f939');
        $this->dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
