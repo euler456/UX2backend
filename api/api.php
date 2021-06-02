@@ -24,14 +24,14 @@ $response->headers->set('Access-Control-Allow-Headers', 'origin, content-type, a
 $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 $response->headers->set('Access-Control-Allow-Origin', 'https://ux2backend.herokuapp.com/');
 $response->headers->set('Access-Control-Allow-Credentials', 'true');
-echo ("user") ;
-die;
 //put session here because here is the place the action started
 
 $session->start();
 if (!$session->has('sessionObj')) {
     $session->set('sessionObj', new sqsSession);
 }
+echo ("use1r") ;
+die;
 if (empty($request->query->all())) {
     $response->setStatusCode(400);
 } elseif ($request->cookies->has('PHPSESSID')) {
