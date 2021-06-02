@@ -128,12 +128,10 @@ class sqsuser
     }
     function logevent($CustomerID,$action)
     {
-        $ip = $_SERVER['REMOTE_ADDR'];     
         $sql = "INSERT INTO logtable (CustomerID ,ip_addr, action ,usertype) 
                 VALUES (:CustomerID,:ip,:action,'user');";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
-     
         $stmt->bindParam(':action', $action, PDO::PARAM_STR);
         $stmt->bindParam(':ip',  $ip , PDO::PARAM_INT);
         $result = $stmt->execute();
