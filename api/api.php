@@ -315,11 +315,12 @@ if (empty($request->query->all())) {
                 }
             }
         } elseif ($request->query->getAlpha('action') == 'logout') {
-            echo ("use13r") ;
-            die;  
+           
             $res = $session->get('sessionObj')->logEvent('logout');
             $session->get('sessionObj')->logout();
             $response->setStatusCode(200);
+            echo ("use13r") ;
+            die;  
         } elseif ($request->query->getAlpha('action') == 'orderID') {
             $res = $session->get('sessionObj')->orderID();
         } elseif ($request->query->getAlpha('action') == 'sumtotalprice') {
