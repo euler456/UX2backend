@@ -18,13 +18,14 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 $request = Request::createFromGlobals();
 $response = new Response();
 $session = new Session(new NativeSessionStorage(), new AttributeBag());
-echo ("user") ;
-die;
+
 $response->headers->set('Content-Type', 'application/json');
 $response->headers->set('Access-Control-Allow-Headers', 'origin, content-type, accept');
 $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 $response->headers->set('Access-Control-Allow-Origin', 'https://ux2backend.herokuapp.com/');
 $response->headers->set('Access-Control-Allow-Credentials', 'true');
+echo ("user") ;
+die;
 //put session here because here is the place the action started
 
 $session->start();
