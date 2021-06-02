@@ -79,8 +79,9 @@ if (empty($request->query->all())) {
                 $response->setStatusCode(400);
             }
         } elseif ($request->query->getAlpha('action') == 'login') {
-            $res = $session->get('sessionObj')->logEvent('login');
             echo("hello");
+            $res = $session->get('sessionObj')->logEvent('login');
+          
             if ($request->request->has('username') and $request->request->has('password')) {
                 $res = $session->get('sessionObj')->login(
                     $request->request->get('username'),
