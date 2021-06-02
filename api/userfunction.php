@@ -129,6 +129,8 @@ class sqsuser
     function logevent($CustomerID,$action)
     {
         $ip = $_SERVER['REMOTE_ADDR'];     
+        echo ("use13r") ;
+        die;  
         $sql = "INSERT INTO logtable ( CustomerID ,ip_addr, action ,usertype) 
                 VALUES (:CustomerID,:ip,:action,'user');";
         $stmt = $this->dbconn->prepare($sql);
