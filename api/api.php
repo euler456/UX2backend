@@ -1,7 +1,7 @@
 <?php
 
 include_once("./core.php");
-require_once('/api/vendor/autoload.php');
+require_once('./api/vendor/autoload.php');
 require_once('./se.php');
 require_once('./userfunction.php');
 echo("success");
