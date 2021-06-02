@@ -7,7 +7,8 @@ require_once('./userfunction.php');
 
 //sqsuser is from the userfunction.php which represent database
 $sqsdb = new sqsuser;
-
+echo ("user") ;
+die;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;

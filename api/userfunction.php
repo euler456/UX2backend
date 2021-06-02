@@ -12,9 +12,7 @@ class sqsuser
 
         $this->dbconn = new PDO($dbURI, 'b48b00a18bfa2e', '1964f939');
        $this->dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-       echo ("user") ;
-       echo $dbURI ;
-   die;
+      
        // $cleardb_url = parse_url(getenv("mysql://b48b00a18bfa2e:1964f939@us-cdbr-east-04.cleardb.com/heroku_be04d0b5c2244ab?reconnect=true"));
 //$cleardb_server = $cleardb_url["us-cdbr-east-04.cleardb.com"];
 //$cleardb_username = $cleardb_url["b48b00a18bfa2e"];
