@@ -8,20 +8,19 @@ class sqsuser
     public function __construct()
     {
      //here to connect the database in the computer
-       // $dbURI = 'mysql:host=' . 'localhost' . ';port=3307;dbname=' . 'proj2';
-    //  $this->dbconn = new PDO($dbURI, 'root', '');
-     //  $this->dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbURI = 'mysql:host=' . 'us-cdbr-east-04.cleardb.com' . ';port=3306;dbname=' . 'heroku_be04d0b5c2244ab';
+     $this->dbconn = new PDO($dbURI, 'b48b00a18bfa2e', '1964f939');
+       $this->dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $cleardb_url = parse_url(getenv("mysql://b48b00a18bfa2e:1964f939@us-cdbr-east-04.cleardb.com/heroku_be04d0b5c2244ab?reconnect=true"));
-$cleardb_server = $cleardb_url["us-cdbr-east-04.cleardb.com"];
-$cleardb_username = $cleardb_url["b48b00a18bfa2e"];
-$cleardb_password = $cleardb_url["1964f939"];
-$cleardb_db = substr($cleardb_url["heroku_be04d0b5c2244ab"],1);
-$active_group = 'default';
-$query_builder = TRUE;
+       // $cleardb_url = parse_url(getenv("mysql://b48b00a18bfa2e:1964f939@us-cdbr-east-04.cleardb.com/heroku_be04d0b5c2244ab?reconnect=true"));
+//$cleardb_server = $cleardb_url["us-cdbr-east-04.cleardb.com"];
+//$cleardb_username = $cleardb_url["b48b00a18bfa2e"];
+//$cleardb_password = $cleardb_url["1964f939"];
+//$cleardb_db = substr($cleardb_url["heroku_be04d0b5c2244ab"],1);
+//$active_group = 'default';
+//$query_builder = TRUE;
 // Connect to DB
-$this->dbconn = new PDO($cleardb_server, $cleardb_username, $cleardb_password, $cleardb_db);
-$this->dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 
     }
 
