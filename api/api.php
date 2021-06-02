@@ -1,13 +1,14 @@
 <?php
-echo("success");
+
 include_once("core.php");
 require_once('./vendor/autoload.php');
 require_once('./se.php');
 require_once('./userfunction.php');
+echo("success");
+die;
 //sqsuser is from the userfunction.php which represent database
 $sqsdb = new sqsuser;
-echo $response ;
-die;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
