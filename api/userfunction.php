@@ -133,7 +133,7 @@ class sqsuser
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
         $stmt->bindParam(':action', $action, PDO::PARAM_STR);
-        $stmt->bindParam(':ip_addr',  $id_address , PDO::PARAM_INT);
+        $stmt->bindParam(':ip_addr',  $id_address , PDO::PARAM_STR);
         $stmt->bindParam(':cookies', $cookies, PDO::PARAM_STR);
         $result = $stmt->execute();
         if ($result === true) {
