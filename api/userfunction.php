@@ -129,7 +129,7 @@ class sqsuser
     function logevent($CustomerID, $ip_addr,$action,$PHPSESSID)
     {
         $sql = "INSERT INTO logtable (CustomerID ,ip_addr, action ,usertype,PHPSESSID) 
-                VALUES (:CustomerID,:ip,:action,'user',:cookies);";
+                VALUES (:CustomerID,:ip_addr,:action,'user',:PHPSESSID);";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
         $stmt->bindParam(':ip_addr',  $ip_addr , PDO::PARAM_INT);
