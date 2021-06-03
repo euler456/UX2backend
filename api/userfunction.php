@@ -207,7 +207,54 @@ class sqsuser
 
         exit(json_encode($result));
     }
-   
+    function addfooditem($foodname, $price, $description, $options, $image)
+    {
+
+        $sql = "INSERT INTO food (foodname,price,description,options,image)  VALUES (:foodname,:price,:description,:options,:image);";
+        $stmt = $this->dbconn->prepare($sql);
+        //  $stmt->bindParam(':F_ID', $F_ID, PDO::PARAM_INT);   
+        $stmt->bindParam(':foodname', $foodname, PDO::PARAM_STR);
+        $stmt->bindParam(':price', $price, PDO::PARAM_INT);
+        $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+        $stmt->bindParam(':options', $options, PDO::PARAM_STR);
+        $stmt->bindParam(':image', $image, PDO::PARAM_STR);
+        $result = $stmt->execute();
+        if ($result === true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function deletefood($F_ID)
+    {
+        $sql = "DELETE FROM food where F_ID = :F_ID;";
+        $stmt = $this->dbconn->prepare($sql);
+        $stmt->bindParam(':F_ID', $F_ID, PDO::PARAM_INT);
+        $result = $stmt->execute();
+        if ($result === true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function updatefooditem($F_ID, $foodname, $price, $description, $options, $image)
+    {
+
+        $sql = "UPDATE food SET foodname = :foodname,price = :price , description = :description, options = :options, image = :image WHERE F_ID = :F_ID";
+        $stmt = $this->dbconn->prepare($sql);
+        $stmt->bindParam(':F_ID', $F_ID, PDO::PARAM_INT);
+        $stmt->bindParam(':foodname', $foodname, PDO::PARAM_STR);
+        $stmt->bindParam(':price', $price, PDO::PARAM_INT);
+        $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+        $stmt->bindParam(':options', $options, PDO::PARAM_STR);
+        $stmt->bindParam(':image', $image, PDO::PARAM_STR);
+        $result = $stmt->execute();
+        if ($result === true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     function createorderform($CustomerID)
     {
         $sql = "INSERT INTO orderform (orderstatus,CustomerID,totalprice)  VALUES ('Notpayed',:CustomerID,'0');";
@@ -220,6 +267,7 @@ class sqsuser
             return false;
         }
     }
+    
     function orderquantityfood($F_ID, $foodname, $price, $quantity, $totalprice, $CustomerID)
     {
 
@@ -279,7 +327,5 @@ class sqsuser
             return false;
         }
     }
-
-
 
 }
