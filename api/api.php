@@ -36,7 +36,7 @@ if (empty($request->query->all())) {
     $response->setStatusCode(400);
 } 
 elseif ($request->cookies->has('PHPSESSID')) {
-    echo($request->cookies->get('PHPSESSID'));
+    echo($request->cookies->getAlpha('PHPSESSID'));
    die;
     if ($session->get('sessionObj')->is_rate_limited()) {
         $response->setStatusCode(429);
