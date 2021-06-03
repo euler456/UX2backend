@@ -47,6 +47,8 @@ elseif ($request->cookies->has('PHPSESSID')) {
     //if the request is post , the code will start the action which is in the POST Block
     if ($request->getMethod() == 'POST') {  
            // register
+           echo($request->getClientIp());echo($request->cookies->get('PHPSESSID'));
+           die;
            echo("hello");
         if ($request->query->getAlpha('action') == 'register') {
             if ($request->request->has('username')) {
@@ -83,6 +85,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $response->setStatusCode(400);
             }
         } elseif ($request->query->getAlpha('action') == 'login') {
+           
            $session->get('sessionObj')->logEvent($request->getClientIp(),'login',$request->cookies->get('PHPSESSID'));
             if ($request->request->has('username') and $request->request->has('password')) {
                 $res = $session->get('sessionObj')->login(
