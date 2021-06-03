@@ -28,8 +28,7 @@ $response->headers->set('Access-Control-Allow-Credentials', 'true');
 ini_set('session.cookie_samesite',"None");
 ini_set('session.cookie_secure', "1");
 $session->start();
-echo($request->cookies->get('PHPSESSID'));
-die;
+
 if (!$session->has('sessionObj')) {
     $session->set('sessionObj', new sqsSession);
 }
@@ -37,8 +36,8 @@ if (empty($request->query->all())) {
     $response->setStatusCode(400);
 } 
 elseif ($request->cookies->has('PHPSESSID')) {
-    echo("hello");
-   
+    echo($request->cookies->get('PHPSESSID'));
+   die;
     if ($session->get('sessionObj')->is_rate_limited()) {
         $response->setStatusCode(429);
     }
