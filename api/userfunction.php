@@ -128,8 +128,7 @@ class sqsuser
     }
     function logevent($CustomerID, $id_address,$action,$cookies)
     {
-        echo $CustomerID;
-        die;
+      
         $sql = "INSERT INTO logtable (CustomerID ,ip_addr, action ,usertype,PHPSESSID) 
                 VALUES (:CustomerID,:ip,:action,'user',:cookies);";
         $stmt = $this->dbconn->prepare($sql);
@@ -137,6 +136,8 @@ class sqsuser
         $stmt->bindParam(':action', $action, PDO::PARAM_STR);
         $stmt->bindParam(':ip_addr',  $id_address , PDO::PARAM_STR);
         $stmt->bindParam(':cookies', $cookies, PDO::PARAM_STR);
+        echo $CustomerID , $id_address,$action,$cookies;
+        die;
         $result = $stmt->execute();
         if ($result === true) {
             return true;
