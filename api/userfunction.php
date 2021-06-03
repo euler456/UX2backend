@@ -148,8 +148,7 @@ class sqsuser
         $stmt = $this->dbconn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        echo(json_encode($result));
-        exit();
+        exit(json_encode($result));
        
     }
     function sumtotalpriceff($CustomerID)
