@@ -149,6 +149,7 @@ class sqsuser
         $stmt->execute();
         $result = $stmt->fetchAll();
         exit(json_encode($result));
+        echo $result;
     }
     function sumtotalpriceff($CustomerID)
     {
