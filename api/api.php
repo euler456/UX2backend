@@ -154,7 +154,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
             }
         } elseif ($request->query->getAlpha('action') == 'displayorderfood') {
             $res = $session->get('sessionObj')->displayorder();
-           // return $res;
+            return $res;
         } elseif ($request->query->getAlpha('action') == 'orderdelete') {
             $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'orderdelete',$request->cookies->get('PHPSESSID'));
             $res = $session->get('sessionObj')->orderdelete(
