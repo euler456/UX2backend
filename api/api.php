@@ -18,11 +18,19 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 $request = Request::createFromGlobals();
 $response = new Response();
 $session = new Session(new NativeSessionStorage(), new AttributeBag());
+$http_origin = $_SERVER['HTTP_ORIGIN'];
 
+if ($http_origin == 'https://ux2website.herokuapp.com' || $http_origin == 'https://proj3frontend.herokuapp.com' )
+{
+    $response->headers->set('Access-Control-Allow-Origin', $http_origin);
+}
+else{
+    $response->setStatusCode(400);
+}
 $response->headers->set('Content-Type', 'application/json');
 $response->headers->set('Access-Control-Allow-Headers', 'origin, content-type, accept');
 $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-$response->headers->set('Access-Control-Allow-Origin', 'https://ux2website.herokuapp.com');
+//$response->headers->set('Access-Control-Allow-Origin', 'https://ux2website.herokuapp.com');
 $response->headers->set('Access-Control-Allow-Credentials', 'true');
 //put session here because here is the place the action started
 ini_set('session.cookie_samesite',"None");
@@ -302,7 +310,197 @@ elseif ($request->cookies->has('PHPSESSID')) {
             } elseif ($res === 0) {
                 $response->setStatusCode(500);
             }
-        } else {
+
+        }  //==========admin==================
+        elseif ($request->query->getAlpha('action') == 'registeradmin') {
+           if ($request->request->has('username')) {
+               $res = $sqsdb->userExists($request->request->get('username'));
+               if ($res) {
+                   $response->setStatusCode(418);
+               } else {
+                   if (
+                       $request->request->has('username') and
+                       $request->request->has('email') and
+                       $request->request->has('phone') and
+                       $request->request->has('postcode') and
+                       $request->request->has('password') and
+                       $request->request->has('password2')
+                   ) {
+                       $res = $session->get('sessionObj')->registeradmin(
+                           $request->request->getAlpha('username'),
+                           $request->request->get('email'),
+                           $request->request->get('phone'),
+                           $request->request->get('postcode'),
+                           $request->request->get('password'),
+                           $request->request->get('csrf')
+                       );
+                       if ($res === true) {
+                           $response->setStatusCode(201);
+                       } elseif ($res === false) {
+                           $response->setStatusCode(403);
+                       } elseif ($res === 0) {
+                           $response->setStatusCode(500);
+                       }
+                   }
+               }
+           } else {
+               $response->setStatusCode(400);
+           }
+       } elseif ($request->query->getAlpha('action') == 'adminlogin') {
+           if ($request->request->has('username') and $request->request->has('password')) {
+               $res = $session->get('sessionObj')->adminlogin(
+                   $request->request->get('username'),
+                   $request->request->get('password')
+               );
+               if ($res === false) {
+                   $response->setContent(json_encode($request->request));
+                   $response->setStatusCode(401);
+               } elseif (count($res) == 1) {
+                   $response->setStatusCode(203);
+                   $response->setContent(json_encode($res));
+               } elseif (count($res) > 1) {
+                   $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'admin login',$request->cookies->get('PHPSESSID'));
+                   $response->setStatusCode(200);
+                   $response->setContent(json_encode($res));
+               }
+           } else {
+               $response->setContent(json_encode($request));
+               $response->setStatusCode(404);
+           }
+       } elseif ($request->query->getAlpha('action') == 'adminupdate') {
+           $res = $session->get('sessionObj')->isLoggedIn();
+           if (($request->request->has('username')) && ($res != false)) {
+               $res = $sqsdb->userExists($request->request->get('username'));
+               if ($res) {
+                   $response->setStatusCode(400);
+               } else {
+                   if (
+                       $request->request->has('currentusername') and
+                       $request->request->has('username') and
+                       $request->request->has('email') and
+                       $request->request->has('phone') and
+                       $request->request->has('postcode') and
+                       $request->request->has('password') and
+                       $request->request->has('password2')
+                   ) {
+                       $res = $session->get('sessionObj')->adminupdate(
+                           //    $res = $sqsdb->userid($request->request->get('currentusername')),
+                           $request->request->getAlpha('username'),
+                           $request->request->get('email'),
+                           $request->request->get('phone'),
+                           $request->request->get('postcode'),
+                           $request->request->get('password'),
+                           $request->request->get('csrf')
+                       );
+                       if ($res === true) {
+                           $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'edit profile',$request->cookies->get('PHPSESSID'));
+                           $response->setStatusCode(201);
+                       } elseif ($res === false) {
+                           $response->setStatusCode(403);
+                       } elseif ($res === 0) {
+                           $response->setStatusCode(500);
+                       }
+                   }
+               }
+            }
+            
+            }
+            elseif ($request->query->getAlpha('action') == 'displayuser') {
+                $res = $session->get('sessionObj')->isLoggedIn();
+                if ($res == false) {
+                    $response->setStatusCode(400);}
+                    else{
+                    $res = $session->get('sessionObj')->displayuser();
+                    return $res;
+                } 
+            } elseif ($request->query->getAlpha('action') == 'adduser') {
+                $res = $session->get('sessionObj')->isLoggedIn();
+                if ($res == false) {
+                    $response->setStatusCode(400);}
+                    else{
+                    if (
+                        $request->request->has('username') and
+                        $request->request->has('email') and
+                        $request->request->has('phone') and
+                        $request->request->has('postcode') and
+                        $request->request->has('password') and
+                        $request->request->has('usertype')
+                    ){
+                        $response->setStatusCode(201);
+                        $res = $session->get('sessionObj')->adduser(
+                            $request->request->getAlpha('username'),
+                            $request->request->get('email'),
+                            $request->request->get('phone'),
+                            $request->request->get('postcode'),
+                            $request->request->get('password'),
+                            $request->request->get('usertype')
+                        );
+                        if ($res === true) {
+                            $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'adduser',$request->cookies->get('PHPSESSID'));
+                            $response->setStatusCode(201);
+                        } elseif ($res === false) {
+                            $response->setStatusCode(403);
+                        } elseif ($res === 0) {
+                            $response->setStatusCode(500);
+                        }
+                    } else {
+                        $response->setStatusCode(400);
+                    }
+                } 
+            } elseif ($request->query->getAlpha('action') == 'deleteuser') {
+                $res = $session->get('sessionObj')->isLoggedIn();
+                if ($res === false) {
+                    $response->setStatusCode(400);}
+                    else{
+                    $res = $session->get('sessionObj')->deleteuser(
+                        $request->request->get('CustomerID')
+                    );
+                    if ($res === true) {
+                        $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'delete user',$request->cookies->get('PHPSESSID'));
+                        $response->setStatusCode(201);
+                    } elseif ($res === false) {
+                        $response->setStatusCode(403);
+                    } elseif ($res === 0) {
+                        $response->setStatusCode(500);
+                    }
+                } 
+            } elseif ($request->query->getAlpha('action') == 'updateuser') {
+                $res = $session->get('sessionObj')->isLoggedIn();
+                if ($res === false) {
+                    $response->setStatusCode(400);}
+                    else{
+                    if (
+                        $request->request->has('CustomerID') and
+                        $request->request->has('username') and
+                        $request->request->has('email') and
+                        $request->request->has('phone') and
+                        $request->request->has('postcode') and
+                        $request->request->has('password') and 
+                        $request->request->has('usertype')
+                    ) {
+                        $res = $session->get('sessionObj')->updateuser(
+                            $request->request->get('CustomerID'),
+                            $request->request->getAlpha('username'),
+                                $request->request->get('email'),
+                                $request->request->get('phone'),
+                                $request->request->get('postcode'),
+                                $request->request->get('password'),
+                                $request->request->get('usertype')
+                        );
+                        if ($res === true) {
+                            $response->setStatusCode(201);
+                            $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'update user',$request->cookies->get('PHPSESSID'));
+                        } elseif ($res === false) {
+                            $response->setStatusCode(403);
+                        } elseif ($res === 0) {
+                            $response->setStatusCode(500);
+                        }
+                    } else {
+                        $response->setStatusCode(400);
+                    }
+                } 
+            }
+        else {
             $response->setStatusCode(400);
         }
     }
@@ -323,7 +521,15 @@ elseif ($request->cookies->has('PHPSESSID')) {
             $session->get('sessionObj')->logout();
             $response->setStatusCode(200);
            
-        } elseif ($request->query->getAlpha('action') == 'orderID') {
+        } 
+        elseif ($request->query->getAlpha('action') == 'adminlogout') {
+           
+            $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'logout',$request->cookies->get('PHPSESSID'));
+            $session->get('sessionObj')->logout();
+            $response->setStatusCode(200);
+           
+        }
+        elseif ($request->query->getAlpha('action') == 'orderID') {
             $res = $session->get('sessionObj')->orderID();
         } elseif ($request->query->getAlpha('action') == 'sumtotalprice') {
             $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'complete order',$request->cookies->get('PHPSESSID'));
