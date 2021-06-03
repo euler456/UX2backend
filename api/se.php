@@ -88,7 +88,6 @@ class sqsSession
     }
     public function logEvent($id_address,$action,$cookies)
     {
-       
         global $sqsdb;
         if ($sqsdb->logevent($this->CustomerID, $id_address,$action,$cookies)) {
             return true;
