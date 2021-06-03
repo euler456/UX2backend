@@ -88,13 +88,13 @@ class sqsSession
     }
     public function logEvent($ip_addr,$action,$PHPSESSID)
     {
-        return $this->CustomerID;
-        /*global $sqsdb;
+      
+        global $sqsdb;
         if ($sqsdb->logevent($this->CustomerID, $ip_addr,$action,$PHPSESSID)) {
             return true;
         } else {
             return 0;
-        }*/
+        }
     }
     public function isLoggedIn()
     {

@@ -84,7 +84,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $response->setStatusCode(400);
             }
         } elseif ($request->query->getAlpha('action') == 'login') {
-            $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'login',$request->cookies->get('PHPSESSID'));
+           
             if ($request->request->has('username') and $request->request->has('password')) {
                 $res = $session->get('sessionObj')->login(
                     $request->request->get('username'),
@@ -99,6 +99,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 } elseif (count($res) > 1) {
                     $response->setStatusCode(200);
                     $response->setContent(json_encode($res));
+                    $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'login',$request->cookies->get('PHPSESSID'));
                 }
             } else {
                 $response->setContent(json_encode($request));
