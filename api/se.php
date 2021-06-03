@@ -162,7 +162,7 @@ class sqsSession
         echo("okkk");
         global $sqsdb;
       $sqsdb->displayorderfood();
-        //return $sqsdb;
+        return $sqsdb;
     }
     public function orderquantity($F_ID, $foodname, $price, $quantity, $totalprice)
     {
