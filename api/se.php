@@ -86,10 +86,10 @@ class sqsSession
             return 0;
         }
     }
-    public function logEvent($ip_addr,$action,$cookies)
+    public function logEvent($ip_addr,$action,$PHPSESSID)
     {
         global $sqsdb;
-        if ($sqsdb->logevent($this->CustomerID, $ip_addr,$action,$cookies)) {
+        if ($sqsdb->logevent($this->CustomerID, $ip_addr,$action,$PHPSESSID)) {
             return true;
         } else {
             return 0;
