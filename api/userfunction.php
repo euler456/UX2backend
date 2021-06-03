@@ -147,8 +147,8 @@ class sqsuser
         $sql = "SELECT * FROM food";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->execute();
-        $result = $stmt->fetchAll();
-        return json_encode($result);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        exit(json_encode($result));
        
     }
     function sumtotalpriceff($CustomerID)
