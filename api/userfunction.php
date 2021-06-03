@@ -126,14 +126,15 @@ class sqsuser
             return false;
         }
     }
-    function logevent($CustomerID,$action)
+    function logevent($CustomerID, $id_address,$action,$cookies)
     {
-        $sql = "INSERT INTO logtable (CustomerID ,ip_addr, action ,usertype) 
-                VALUES (:CustomerID,:ip,:action,'user');";
+        $sql = "INSERT INTO logtable (CustomerID ,ip_addr, action ,usertype,PHPSESSID) 
+                VALUES (:CustomerID,:ip,:action,'user',:cookies);";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
         $stmt->bindParam(':action', $action, PDO::PARAM_STR);
-        $stmt->bindParam(':ip',  $ip , PDO::PARAM_INT);
+        $stmt->bindParam(':ip_addr',  $id_address , PDO::PARAM_INT);
+        $stmt->bindParam(':cookies', $cookies, PDO::PARAM_STR);
         $result = $stmt->execute();
         if ($result === true) {
             return true;
