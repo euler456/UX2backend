@@ -120,33 +120,7 @@ class sqsSession
         $sqsdb->displayfood();
         return $sqsdb;
     }
-    public function addfood($foodname, $price, $description, $options, $image)
-    {
-        global $sqsdb;
-        if ($sqsdb->addfooditem($foodname, $price, $description, $options, $image)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public function deleteFOOD($F_ID)
-    {
-        global $sqsdb;
-        if ($sqsdb->deletefood($F_ID)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public function updatefood($F_ID, $foodname, $price, $description, $options, $image)
-    {
-        global $sqsdb;
-        if ($sqsdb->updatefooditem($F_ID, $foodname, $price, $description, $options, $image)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+   
     public function createorder()
     {
         global $sqsdb;
@@ -230,99 +204,6 @@ class sqsSession
         }
         return $sqsdb;
     }
-    //=============admin
-
-
-    public function adminlogin($username, $password)
-    {
-        global $sqsdb;
-
-        $res = $sqsdb->admincheckLogin($username, $password);
-        if ($res === false) {
-            return false;
-        } elseif (count($res) > 1) {
-            $this->CustomerID = $res['CustomerID'];
-            $this->user_token = md5(json_encode($res));
-            return array(
-                'username' => $res['username'],
-                'email' => $res['email'],
-                'phone' => $res['phone'],
-                'usertype' => $res['usertype'],
-                'Hash' => $this->user_token
-            );
-        } elseif (count($res) == 1) {
-            $this->CustomerID = $res['CustomerID'];
-            $this->user_token = md5(json_encode($res));
-            return array('Hash' => $this->user_token);
-        }
-    }
-    public function registeradmin($username, $email, $phone, $postcode, $password)
-    {
-        global $sqsdb;
-        if ($sqsdb->registerUseradmin( $username,  $email, $phone, $postcode, $password)) {
-            return true;
-        } else {
-            return 0;
-        }
-    }
-    public function adminupdate($username, $email, $phone, $postcode, $password)
-    {
-        global $sqsdb;
-        if ($sqsdb->updateprofile($this->CustomerID, $username,  $email, $phone, $postcode, $password)) {
-            return true;
-        } else {
-            return 0;
-        }
-    }
    
-    public function adminlogEvent($ip_addr,$action,$PHPSESSID)
-    {
-        global $sqsdb;
-        if ($sqsdb->adminlogevent($this->CustomerID,$ip_addr,$action,$PHPSESSID)) {
-            return true;
-        } else {
-            return 0;
-        }
-    }
 
-
-
-
-
-
-
-
-    function displayuser()
-{
-    global $sqsdb;
-    $sqsdb->userdisplay();
-    return $sqsdb;
-}
- function adduser($username, $email, $phone, $postcode, $password,$usertype)
-{
-    global $sqsdb;
-    if ($sqsdb->useradd($username, $email, $phone, $postcode, $password,$usertype)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-function deleteuser($CustomerID)
-{
-    global $sqsdb;
-    if ($sqsdb->userdelete($CustomerID)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-function updateuser($CustomerID, $username, $email, $phone, $postcode, $password,$usertype)
-{
-    global $sqsdb;
-    if ($sqsdb->userupdate($CustomerID, $username, $email, $phone, $postcode, $password,$usertype)) {
-        return true;
-    } else {
-        return false;
-    }
-}
 }
