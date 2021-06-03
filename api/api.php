@@ -84,7 +84,8 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $response->setStatusCode(400);
             }
         } elseif ($request->query->getAlpha('action') == 'login') {
-          
+           echo($request->cookies->get('PHPSESSID'));
+            die;
          //  $session->get('sessionObj')->logEvent($request->getClientIp(),'login',$request->cookies->get('PHPSESSID'));
             if ($request->request->has('username') and $request->request->has('password')) {
                 $res = $session->get('sessionObj')->login(
