@@ -36,7 +36,6 @@ if (empty($request->query->all())) {
     $response->setStatusCode(400);
 } 
 elseif ($request->cookies->has('PHPSESSID')) {
-    echo($request->getClientIp());
   
     if ($session->get('sessionObj')->is_rate_limited()) {
         $response->setStatusCode(429);
@@ -86,7 +85,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
             }
         } elseif ($request->query->getAlpha('action') == 'login') {
           
-         //  $session->get('sessionObj')->logEvent($request->getClientIp(),'login',$request->cookies->get('PHPSESSID'));
+            $res -> $session->logEvent($request->getClientIp(),'login',$request->cookies->get('PHPSESSID'));
             if ($request->request->has('username') and $request->request->has('password')) {
                 $res = $session->get('sessionObj')->login(
                     $request->request->get('username'),
