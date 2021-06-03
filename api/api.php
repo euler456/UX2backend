@@ -114,7 +114,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $response->setContent(json_encode($res));
             }
         } elseif ($request->query->getAlpha('action') == 'update') {
-            $res = $session->get('sessionObj')->logEvent('update');
+            $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'update',$request->cookies->get('PHPSESSID'));
             $res = $session->get('sessionObj')->isLoggedIn();
             if (($request->request->has('username')) && (count($res) == 1)) {
                 $res = $sqsdb->userExists($request->request->get('username'));
@@ -158,7 +158,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
             return $res;
             $response->setStatusCode(400);
         } elseif ($request->query->getAlpha('action') == 'orderdelete') {
-            $res = $session->get('sessionObj')->logEvent('orderdelete');
+            $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'orderdelete',$request->cookies->get('PHPSESSID'));
             $res = $session->get('sessionObj')->orderdelete(
                 $request->request->get('orderitem_ID')
             );
@@ -170,7 +170,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $response->setStatusCode(500);
             }
         } elseif ($request->query->getAlpha('action') == 'orderquantity') {
-            $res = $session->get('sessionObj')->logEvent('orderthefood');
+            $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'orderfood',$request->cookies->get('PHPSESSID'));
             if (
                 $request->request->has('F_ID') and
                 $request->request->has('foodname') and
@@ -280,7 +280,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 }
             }
         } elseif ($request->query->getAlpha('action') == 'checkout') {
-            $res = $session->get('sessionObj')->logEvent('checkout');
+            $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'checkout',$request->cookies->get('PHPSESSID'));
             $res = $session->get('sessionObj')->checkout(
                 $request->request->get('cname'),
                 $request->request->get('ccnum'),
@@ -321,14 +321,14 @@ elseif ($request->cookies->has('PHPSESSID')) {
             }
         } elseif ($request->query->getAlpha('action') == 'logout') {
            
-            $res = $session->get('sessionObj')->logEvent('logout');
+            $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'logout',$request->cookies->get('PHPSESSID'));
             $session->get('sessionObj')->logout();
             $response->setStatusCode(200);
            
         } elseif ($request->query->getAlpha('action') == 'orderID') {
             $res = $session->get('sessionObj')->orderID();
         } elseif ($request->query->getAlpha('action') == 'sumtotalprice') {
-            $res = $session->get('sessionObj')->logEvent('complete order');
+            $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'complete order',$request->cookies->get('PHPSESSID'));
             $res = $session->get('sessionObj')->sumtotalprice();
             if ($res === true) {
                 $response->setStatusCode(201);
