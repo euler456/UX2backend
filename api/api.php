@@ -85,8 +85,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
         } elseif ($request->query->getAlpha('action') == 'login') {
            
             $res = $session->get('sessionObj')->logEvent($request->getClientIp(),'login',$request->cookies->get('PHPSESSID'));
-          echo $res;
-          die;
+        
             if ($request->request->has('username') and $request->request->has('password')) {
                 $res = $session->get('sessionObj')->login(
                     $request->request->get('username'),
