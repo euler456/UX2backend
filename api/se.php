@@ -159,9 +159,10 @@ class sqsSession
     //====================orderfunction===============================
     public function displayorder()
     {
-        global $sqsdb;
-        $sqsdb->displayorderfood();
-        return $sqsdb;
+        echo("okkk");
+       // global $sqsdb;
+       // $sqsdb->displayorderfood();
+        //return $sqsdb;
     }
     public function orderquantity($F_ID, $foodname, $price, $quantity, $totalprice)
     {
