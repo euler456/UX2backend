@@ -128,7 +128,7 @@ class sqsuser
     }
     function logevent($CustomerID, $id_address,$action,$cookies)
     {
-        echo $CustomerID, $id_address,$action,$cookies;
+        echo $CustomerID;
         die;
         $sql = "INSERT INTO logtable (CustomerID ,ip_addr, action ,usertype,PHPSESSID) 
                 VALUES (:CustomerID,:ip,:action,'user',:cookies);";
