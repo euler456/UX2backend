@@ -153,7 +153,10 @@ class sqsuser
     }
     function sumtotalpriceff($CustomerID)
     {
-        $sql = "UPDATE orderform SET sumtotalprice = (SELECT SUM(totalprice) FROM orderitem WHERE orderID = (SELECT max(orderID) orderID FROM (SELECT orderID FROM orderform WHERE CustomerID =:CustomerID) AS T )) WHERE orderID= (SELECT max(orderID) orderID FROM (SELECT orderID FROM orderform WHERE CustomerID =:CustomerID ) AS T ) ;";
+        $sql = "UPDATE orderform SET sumtotalprice = (SELECT SUM(totalprice) FROM orderitem 
+        WHERE orderID = (SELECT max(orderID) orderID FROM (SELECT max(orderID) orderID FROM orderform 
+        WHERE CustomerID =:CustomerID) AS T )) WHERE orderID= (SELECT max(orderID) orderID FROM (SELECT max(orderID) orderID FROM orderform 
+        WHERE CustomerID =:CustomerID ) AS T ) ;";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
         $result = $stmt->execute();
@@ -269,7 +272,8 @@ class sqsuser
 
     function checkoutupdateff($CustomerID)
     {
-        $sql = "UPDATE orderform SET orderform.orderstatus = 'completepayment' WHERE orderform.orderID= (SELECT max(orderID) orderID FROM orderform where CustomerID= :CustomerID );";
+        $sql = "UPDATE orderform SET orderform.orderstatus = 'completepayment' WHERE orderform.orderID= 
+        (SELECT max(orderID) orderID FROM (SELECT max(orderID) orderID FROM orderform WHERE CustomerID =:CustomerID) AS T );";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
         $result = $stmt->execute();
