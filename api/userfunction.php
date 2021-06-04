@@ -353,10 +353,10 @@ function adminlogevent($CustomerID, $ip_addr,$action,$PHPSESSID)
     }
 }
 //============================ Control user function===================================
-
+//WHERE usertype ='user'
 function userdisplay()
 {
-$sql = "SELECT * FROM customer WHERE usertype ='user'";
+$sql = "SELECT * FROM customer";
 $stmt = $this->dbconn->prepare($sql);
 $result= $stmt->execute();
 $row = $stmt->fetchAll();
