@@ -197,8 +197,9 @@ class sqsSession
     public function confirmorderform()
     {
         global $sqsdb;
-        $sqsdb->getconfirmorderform($this->CustomerID);
-        return $sqsdb;
+     
+        $result=$sqsdb->getconfirmorderform($this->CustomerID);
+        return $result;
     }
     public function sumtotalprice()
     {

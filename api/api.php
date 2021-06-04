@@ -553,6 +553,8 @@ elseif ($request->cookies->has('PHPSESSID')) {
             $response->setStatusCode(200);
         } elseif ($request->query->getAlpha('action') == 'confirmorderform') {
             $res = $session->get('sessionObj')->confirmorderform();
+            $response->setContent(json_encode($res));
+            $response->setStatusCode(200);
         }
     }
     if ($request->getMethod() == 'DELETE') {           // delete queue, delete comment

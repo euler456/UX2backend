@@ -243,8 +243,9 @@ class sqsuser
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->fetchAll();
-        exit(json_encode($result));
+        $result= $stmt->execute();
+        $row = $stmt->fetchAll();
+       return  $row;
     }
     function checkoutff($CustomerID, $cname, $ccnum, $expmonth, $expyear, $cvv)
     {
