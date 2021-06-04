@@ -11,7 +11,7 @@ class sqsSession
     private $phone;
     private $user_token;
     private $interval = 60;
-    private $limit = 1000;
+    private $limit = 500;
     private $count = 0;
 
     public function __construct()
@@ -24,7 +24,7 @@ class sqsSession
             $this->last_visit = time();
             return false;
         }
-        if ($this->last_visit == time()) {
+        if ($this->last_visit == time()+0.5) {
             return true;
         }
         return false;
