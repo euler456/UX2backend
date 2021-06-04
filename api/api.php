@@ -19,7 +19,7 @@ $request = Request::createFromGlobals();
 $response = new Response();
 $session = new Session(new NativeSessionStorage(), new AttributeBag());
 $http_origin = $_SERVER['HTTP_ORIGIN'];
-if ($http_origin == 'https://ux2website.herokuapp.com' || $http_origin == 'https://proj3frontend.herokuapp.com' )
+if ( $http_origin == 'https://proj3frontend.herokuapp.com' || $http_origin == 'https://ux2website.herokuapp.com'  )
 {
     $response->headers->set('Access-Control-Allow-Origin', $http_origin);
 }
