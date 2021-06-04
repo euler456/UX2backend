@@ -146,9 +146,9 @@ class sqsuser
     {
         $sql = "SELECT * FROM food";
         $stmt = $this->dbconn->prepare($sql);
-       $result= $stmt->execute();
-        $row = $stmt->fetchAll();
-       return  $row;
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        exit(json_encode($result));
        
     }
     function sumtotalpriceff($CustomerID)
@@ -199,13 +199,9 @@ class sqsuser
     {
         $sql = "SELECT * FROM food";
         $stmt = $this->dbconn->prepare($sql);
-        $stmt->execute();
-        //$conn  = mysqli_connect($dbhost,$dbuser,'',$db);
-        $result = $stmt->fetchAll();
-        //$sql=mysqli_query($conn,"SELECT * FROM food");
-        //$result=mysqli_fetch_all($sql,MYSQLI_ASSOC);
-
-        exit(json_encode($result));
+        $result= $stmt->execute();
+        $row = $stmt->fetchAll();
+       return  $row;
     }
   
     function createorderform($CustomerID)

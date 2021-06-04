@@ -161,9 +161,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
             }
         } elseif ($request->query->getAlpha('action') == 'displayorderfood') {
             $res = $session->get('sessionObj')->displayorder();
-            $response->setStatusCode(200);
-            $response->setContent( json_encode($res));
-           
+            return $res;
         } elseif ($request->query->getAlpha('action') == 'orderdelete') {
             $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'orderdelete',$request->cookies->get('PHPSESSID'));
             $res = $session->get('sessionObj')->orderdelete(
@@ -204,8 +202,8 @@ elseif ($request->cookies->has('PHPSESSID')) {
             }
         } elseif ($request->query->getAlpha('action') == 'displayfood') {
             $res = $session->get('sessionObj')->display();
-            return $res;
-            $response->setStatusCode(400);
+            $response->setContent(json_encode($res));
+            $response->setStatusCode(200);
         } elseif ($request->query->getAlpha('action') == 'addfood') {
             if (
                 $request->request->has('foodname') and
