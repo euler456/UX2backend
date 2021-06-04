@@ -130,6 +130,31 @@ class sqsSession
             return 0;
         }
     }
+    //==================admin food control============
+    public function addfood($foodname,$price, $description,$options,$image) {
+        global $sqsdb;
+            if($sqsdb->addfooditem($foodname,$price,$description,$options,$image)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    public function deleteFOOD($F_ID) {
+            global $sqsdb;
+                if($sqsdb->deletefood($F_ID)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+    public function updatefood($F_ID,$foodname,$price, $description,$options,$image) {
+            global $sqsdb;
+                    if($sqsdb->updatefooditem($F_ID,$foodname,$price,$description,$options,$image)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
     //====================orderfunction===============================
     public function displayorder()
     {
@@ -259,14 +284,6 @@ public function adminlogEvent($ip_addr,$action,$PHPSESSID)
         return 0;
     }
 }
-
-
-
-
-
-
-
-
 function displayuser()
 {
 global $sqsdb;
