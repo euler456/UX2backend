@@ -335,7 +335,6 @@ function registerUseradmin( $username, $email, $phone, $postcode, $password)
 
 function adminlogevent($CustomerID, $ip_addr,$action,$PHPSESSID)
 {
-    $ip = $_SERVER['REMOTE_ADDR'];     
     $sql = "INSERT INTO logtable (CustomerID ,ip_addr, action ,usertype,PHPSESSID) 
     VALUES (:CustomerID,:ip_addr,:action,'admin',:PHPSESSID);";
     $stmt = $this->dbconn->prepare($sql);
