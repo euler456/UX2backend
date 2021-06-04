@@ -153,7 +153,7 @@ class sqsuser
     }
     function sumtotalpriceff($CustomerID)
     {
-        $sql = "UPDATE orderform SET totalprice = (SELECT SUM(totalprice) FROM orderitem  WHERE orderID = (SELECT max(orderID) orderID FROM orderform where CustomerID= :CustomerID ))
+        $sql = "UPDATE orderform SET sumtotalprice = (SELECT SUM(totalprice) FROM orderitem  WHERE orderID = (SELECT max(orderID) orderID FROM orderform where CustomerID= :CustomerID ))
             WHERE orderID= (SELECT max(orderID) orderID FROM orderform where CustomerID= :CustomerID );";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
@@ -206,7 +206,7 @@ class sqsuser
   
     function createorderform($CustomerID)
     {
-        $sql = "INSERT INTO orderform (orderstatus,CustomerID,totalprice)  VALUES ('Notpayed',:CustomerID,'0');";
+        $sql = "INSERT INTO orderform (orderstatus,CustomerID,sumtotalprice)  VALUES ('Notpayed',:CustomerID,'0');";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
         $result = $stmt->execute();
