@@ -146,9 +146,9 @@ class sqsuser
     {
         $sql = "SELECT * FROM food";
         $stmt = $this->dbconn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        exit(json_encode($result));
+        $result= $stmt->execute();
+        $row = $stmt->fetchAll();
+       return  $row;
        
     }
     function sumtotalpriceff($CustomerID)
@@ -169,9 +169,9 @@ class sqsuser
         $sql = "SELECT * FROM orderitem where orderID=(SELECT max(orderID) orderID FROM orderform where CustomerID= :CustomerID );";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        exit(json_encode($result));
+        $result= $stmt->execute();
+        $row = $stmt->fetchAll();
+       return  $row;
     }
     function deleteorderfood($orderitem_ID)
     {
@@ -351,9 +351,9 @@ function userdisplay()
 {
 $sql = "SELECT * FROM customer WHERE usertype ='user'";
 $stmt = $this->dbconn->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->fetchAll();
-    exit(json_encode($result));
+$result= $stmt->execute();
+$row = $stmt->fetchAll();
+return  $row;
 }
 function useradd($username, $email, $phone, $postcode, $password,$usertype)
 {

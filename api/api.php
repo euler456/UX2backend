@@ -54,8 +54,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
     //if the request is post , the code will start the action which is in the POST Block
     if ($request->getMethod() == 'POST') {  
            // register
-         
-           echo("hello");
+    
         if ($request->query->getAlpha('action') == 'register') {
             if ($request->request->has('username')) {
                 $res = $sqsdb->userExists($request->request->get('username'));
@@ -161,7 +160,8 @@ elseif ($request->cookies->has('PHPSESSID')) {
             }
         } elseif ($request->query->getAlpha('action') == 'displayorderfood') {
             $res = $session->get('sessionObj')->displayorder();
-            return $res;
+            $response->setContent(json_encode($res));
+            $response->setStatusCode(200);
         } elseif ($request->query->getAlpha('action') == 'orderdelete') {
             $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'orderdelete',$request->cookies->get('PHPSESSID'));
             $res = $session->get('sessionObj')->orderdelete(
@@ -414,7 +414,8 @@ elseif ($request->cookies->has('PHPSESSID')) {
                     $response->setStatusCode(400);}
                     else{
                     $res = $session->get('sessionObj')->displayuser();
-                    return $res;
+                    $response->setContent(json_encode($res));
+            $response->setStatusCode(200);
                 } 
             } elseif ($request->query->getAlpha('action') == 'adduser') {
                 $res = $session->get('sessionObj')->isLoggedIn();
@@ -548,7 +549,8 @@ elseif ($request->cookies->has('PHPSESSID')) {
             }
         } elseif ($request->query->getAlpha('action') == 'showorderform') {
             $res = $session->get('sessionObj')->showorderform();
-            echo $res;
+            $response->setContent(json_encode($res));
+            $response->setStatusCode(200);
         } elseif ($request->query->getAlpha('action') == 'confirmorderform') {
             $res = $session->get('sessionObj')->confirmorderform();
         }

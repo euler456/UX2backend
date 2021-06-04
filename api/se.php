@@ -118,7 +118,7 @@ class sqsSession
     {
         global $sqsdb;
         $result=$sqsdb->displayfood();
-        return $result;
+        return $sqsdb;
     }
    
     public function createorder()
@@ -158,10 +158,9 @@ class sqsSession
     //====================orderfunction===============================
     public function displayorder()
     {
-        echo("okkk");
         global $sqsdb;
-      $sqsdb->displayorderfood();
-        return $sqsdb;
+        $result=$sqsdb->displayorderfood();
+        return $result;
     }
     public function orderquantity($F_ID, $foodname, $price, $quantity, $totalprice)
     {
@@ -175,8 +174,9 @@ class sqsSession
     public function showorderform()
     {
         global $sqsdb;
-        $sqsdb->displayshoworderform($this->CustomerID);
-        return $sqsdb;
+      //  $sqsdb->displayshoworderform($this->CustomerID);
+        $result=$sqsdb->displayshoworderform($this->CustomerID);
+        return $result;
     }
     public function orderdelete($orderitem_ID)
     {
@@ -287,8 +287,8 @@ public function adminlogEvent($ip_addr,$action,$PHPSESSID)
 function displayuser()
 {
 global $sqsdb;
-$sqsdb->userdisplay();
-return $sqsdb;
+$result=$sqsdb->userdisplay();
+return $result;
 }
 function adduser($username, $email, $phone, $postcode, $password,$usertype)
 {
