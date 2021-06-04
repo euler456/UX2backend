@@ -117,8 +117,8 @@ class sqsSession
     public function display()
     {
         global $sqsdb;
-        $sqsdb->displayfood();
-        return $sqsdb;
+        $result=$sqsdb->displayfood();
+        return $result;
     }
    
     public function createorder()

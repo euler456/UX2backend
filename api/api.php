@@ -161,7 +161,9 @@ elseif ($request->cookies->has('PHPSESSID')) {
             }
         } elseif ($request->query->getAlpha('action') == 'displayorderfood') {
             $res = $session->get('sessionObj')->displayorder();
-            return $res;
+            $response->setStatusCode(200);
+            $response->setContent( json_encode($res));
+           
         } elseif ($request->query->getAlpha('action') == 'orderdelete') {
             $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'orderdelete',$request->cookies->get('PHPSESSID'));
             $res = $session->get('sessionObj')->orderdelete(
