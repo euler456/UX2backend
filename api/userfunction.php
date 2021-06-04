@@ -35,7 +35,7 @@ class sqsuser
         if ($stmt->rowCount() > 0) {
             $retVal = $stmt->fetch(PDO::FETCH_ASSOC);
             if (strlen($retVal['password']) > 0) {
-                if ($retVal['password'] == $p) { // encrypt & decrypt
+                if ($retVal['password'] ==MD5($p) && $retVal['usertype'] == 'user') { // encrypt & decrypt
                     return array(
                         'CustomerID' => $retVal['CustomerID'],
                         'username' => $retVal['username'],
@@ -83,7 +83,7 @@ class sqsuser
         //            $lastCustID = $this->dbconn->lastInsertID();
 
         //            $sql = "INSERT INTO customer(CustomerID,Username,Pass,Email,Phone)  VALUES (:CustomerID,:Username,:Pass,:Email, :Phone)";
-        $sql = "INSERT INTO customer (username,email,phone,postcode,password,usertype)  VALUES (:username,:email, :phone,:postcode,:password,'user');";
+        $sql = "INSERT INTO customer (username,email,phone,postcode,password,usertype)  VALUES (:username,:email, :phone,:postcode,MD5(:password),'user');";
         $stmt = $this->dbconn->prepare($sql);
         //            $stmt->bindParam(':CustomerID', $lastCustID, PDO::PARAM_INT);
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
@@ -110,7 +110,7 @@ class sqsuser
 
         //            $sql = "INSERT INTO customer(CustomerID,Username,Pass,Email,Phone)  VALUES (:CustomerID,:Username,:Pass,:Email, :Phone)";
         // $currentuserid = "SELECT CustomerID FROM customer WHERE username = '$username'";
-        $sql = "UPDATE customer SET username = :username,password = :password , email = :email, phone = :phone, postcode = :postcode WHERE CustomerID = :CustomerID";
+        $sql = "UPDATE customer SET username = :username,password = MD5(:password), email = :email, phone = :phone, postcode = :postcode WHERE CustomerID = :CustomerID";
         $stmt = $this->dbconn->prepare($sql);
         //            $stmt->bindParam(':CustomerID', $lastCustID, PDO::PARAM_INT);
         $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
@@ -361,7 +361,7 @@ $stmt = $this->dbconn->prepare($sql);
 }
 function useradd($username, $email, $phone, $postcode, $password,$usertype)
 {
-$sql = "INSERT INTO customer (username,email,phone,postcode,password,usertype)  VALUES (:username,:email, :phone,:postcode,:password,:usertype);";
+$sql = "INSERT INTO customer (username,email,phone,postcode,password,usertype)  VALUES (:username,:email, :phone,:postcode,MD5(:password),:usertype);";
     $stmt = $this->dbconn->prepare($sql);
     $stmt->bindParam(':username', $username, PDO::PARAM_STR);
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
@@ -390,7 +390,7 @@ if ($result === true) {
 }
 function userupdate($CustomerID, $username, $email, $phone, $postcode, $password,$usertype)
 {
-$sql = "UPDATE customer SET username = :username,password = :password , email = :email, phone = :phone, postcode = :postcode ,usertype=:usertype WHERE CustomerID = :CustomerID";
+$sql = "UPDATE customer SET username = :username,password = MD5(:password) , email = :email, phone = :phone, postcode = :postcode ,usertype=:usertype WHERE CustomerID = :CustomerID";
     $stmt = $this->dbconn->prepare($sql);
     $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
     $stmt->bindParam(':username', $username, PDO::PARAM_STR);
