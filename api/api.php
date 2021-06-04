@@ -213,6 +213,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $request->request->has('options')
             ) {
                 $response->setStatusCode(201);
+                $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'addfood',$request->cookies->get('PHPSESSID'));
                 $res = $session->get('sessionObj')->addfood(
                     $request->request->get('foodname'),
                     $request->request->get('price'),
@@ -235,6 +236,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $request->request->get('F_ID')
             );
             if ($res === true) {
+                $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'delete food',$request->cookies->get('PHPSESSID'));
                 $response->setStatusCode(201);
             } elseif ($res === false) {
                 $response->setStatusCode(403);
@@ -259,6 +261,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                     $request->request->get('image')
                 );
                 if ($res === true) {
+                    $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'update food',$request->cookies->get('PHPSESSID'));
                     $response->setStatusCode(201);
                 } elseif ($res === false) {
                     $response->setStatusCode(403);
@@ -276,6 +279,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $res = $session->get('sessionObj')->createorder();
                 if ($res === true) {
                     $response->setStatusCode(201);
+                    $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'start order',$request->cookies->get('PHPSESSID'));
                 } elseif ($res === false) {
                     $response->setStatusCode(403);
                 } elseif ($res === 0) {
