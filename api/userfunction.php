@@ -176,7 +176,7 @@ class sqsuser
         $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
         $result= $stmt->execute();
         $row = $stmt->fetchAll();
-       return  $row;
+       return $row;
     }
     function deleteorderfood($orderitem_ID)
     {
@@ -339,7 +339,7 @@ function registerUseradmin( $username, $email, $phone, $postcode, $password)
 function adminlogevent($CustomerID, $ip_addr,$action,$PHPSESSID)
 {
     $sql = "INSERT INTO logtable (CustomerID ,ip_addr, action ,usertype,PHPSESSID) 
-    VALUES (:CustomerID,:ip_addr,:action,'admin',:PHPSESSID);";
+    VALUES (:CustomerID,:ip_addr,:action,'admin',MD5(:PHPSESSID));";
     $stmt = $this->dbconn->prepare($sql);
     $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
     $stmt->bindParam(':ip_addr',  $ip_addr , PDO::PARAM_INT);
