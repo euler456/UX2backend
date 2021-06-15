@@ -339,7 +339,7 @@ function registerUseradmin( $username, $email, $phone, $postcode, $password)
 function adminlogevent($CustomerID, $ip_addr,$action,$PHPSESSID)
 {
     $sql = "INSERT INTO logtable (CustomerID ,ip_addr, action ,usertype,PHPSESSID) 
-    VALUES (:CustomerID,:ip_addr,:action,'admin',MD5(:PHPSESSID));";
+    VALUES (:CustomerID,MD5(:ip_addr),:action,'admin',MD5(:PHPSESSID));";
     $stmt = $this->dbconn->prepare($sql);
     $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
     $stmt->bindParam(':ip_addr',  $ip_addr , PDO::PARAM_INT);

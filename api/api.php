@@ -54,7 +54,6 @@ elseif ($request->cookies->has('PHPSESSID')) {
     //if the request is post , the code will start the action which is in the POST Block
     if ($request->getMethod() == 'POST') {  
            // register
-    
         if ($request->query->getAlpha('action') == 'register') {
             if ($request->request->has('username')) {
                 $res = $sqsdb->userExists($request->request->get('username'));
