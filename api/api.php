@@ -18,17 +18,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 $request = Request::createFromGlobals();
 $response = new Response();
 $session = new Session(new NativeSessionStorage(), new AttributeBag());
-if(!isset($_SERVER['HTTP_REFERER'])){
-    $_SERVER['HTTP_REFERER']=0;
-}
-$http_origin = $_SERVER['HTTP_REFERER'];
+$http_origin = $_SERVER['HTTP_ORIGIN'];
 if ( $http_origin == 'https://proj3frontend.herokuapp.com' || $http_origin == 'https://ux2website.herokuapp.com'  )
 {
-    header('Access-Control-Allow-Origin'. $http_origin);
+    $response->headers->set('Access-Control-Allow-Origin', $http_origin);
 }
 else{
-    $response->setStatusCode(502);
-    die();
+    $response->setStatusCode(400);
 }
 $response->headers->set('Content-Type', 'application/json');
 $response->headers->set('Access-Control-Allow-Headers', 'origin, content-type, accept');
