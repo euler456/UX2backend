@@ -24,7 +24,7 @@ if(!isset($_SERVER['HTTP_REFERER'])){
 $http_origin = $_SERVER['HTTP_REFERER'];
 if ( $http_origin == 'https://proj3frontend.herokuapp.com' || $http_origin == 'https://ux2website.herokuapp.com'  )
 {
-    $response->headers->set('Access-Control-Allow-Origin', $http_origin);
+    header('Access-Control-Allow-Origin'. $http_origin);
 }
 else{
     $response->setStatusCode(502);
