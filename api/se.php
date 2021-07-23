@@ -70,6 +70,18 @@ class sqsSession
         else{
             return false;
         }
+        /*  $now = time();
+        if ($now < $this->last_visit + $this->interval) {
+            if ($this->count < $this->limit) {
+                $this->count++;
+                return true;
+            } else {
+                return false;
+            } }
+
+            else {
+                $this->last_visit = $now;
+                $this->count = 1;}*/
     }
 
     public function login($username, $password)
