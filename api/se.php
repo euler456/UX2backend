@@ -56,18 +56,19 @@ class sqsSession
     }
     public function day_rate_limited()
     {
-        $now = time();
-        if ($now < $this->last_visit + $this->interval) {
-            if ($this->count < $this->limit) {
-                $this->count++;
-                return true;
-            } else {
-                return false;
+        $this->oneday =time()- $this->interval;
+        $this->all_visit[]=$this->last_visit;
+        foreach($this->all_visit as $times){
+            if($times < $this->oneday){
+                $key = array_search($times,$this->all_visit);
+                array_splice($this->all_visit,$key);
             }
-        } else {
-            $this->last_visit = $now;
-            $this->count = 1;
+        }
+        if(count($this->all_visit)> $this->limit){
             return true;
+        }
+        else{
+            return false;
         }
     }
 
