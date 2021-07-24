@@ -23,6 +23,11 @@ class sqsuser
 
     }
 
+    function daylimit(){
+        
+    }
+
+
     function checkLogin($u, $p)
     {
         // Return uid if user/password tendered are correct otherwise 0

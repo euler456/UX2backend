@@ -199,9 +199,14 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $response->setStatusCode(400);
             }
         } elseif ($request->query->getAlpha('action') == 'displayfood') {
-            $res = $session->get('sessionObj')->displayorder();
-            $response->setContent(json_encode($res));
-            $response->setStatusCode(200);
+            $res = $session->get('sessionObj')->isLoggedIn();
+            if ($res == false) {
+                $response->setStatusCode(403);
+            } elseif (count($res) == 1) {
+                $res = $session->get('sessionObj')->displayorder();
+                $response->setContent(json_encode($res));
+                $response->setStatusCode(200);
+            }
         } elseif ($request->query->getAlpha('action') == 'addfood') {
             if (
                 $request->request->has('foodname') and

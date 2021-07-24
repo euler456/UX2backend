@@ -10,7 +10,7 @@ class sqsSession
     private $email;
     private $phone;
     private $user_token;
-    private $interval = 60;
+    private $interval = 86400;
     private $limit = 500;
     private $count = 0;
     public function getClientIp() {
