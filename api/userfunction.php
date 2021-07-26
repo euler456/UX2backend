@@ -135,7 +135,7 @@ class sqsuser
                 VALUES (:CustomerID,:ip_addr,:action,'user',:PHPSESSID);";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindParam(':CustomerID', $CustomerID, PDO::PARAM_INT);
-        $stmt->bindParam(':ip_addr',  $ip_addr , PDO::PARAM_INT);
+        $stmt->bindParam(':ip_addr',  $ip_addr , PDO::PARAM_STR);
         $stmt->bindParam(':action', $action, PDO::PARAM_STR);
         $stmt->bindParam(':PHPSESSID', $PHPSESSID, PDO::PARAM_STR);
         $result = $stmt->execute();
