@@ -68,12 +68,17 @@ elseif ($request->cookies->has('PHPSESSID')) {
                         $request->request->has('password') and
                         $request->request->has('password2')
                     ) {
+                        $username=$session->get('sessionObj')->input_testing($request->request->getAlpha('username'));
+                        $email=$session->get('sessionObj')->input_testing($request->request->get('email'));
+                        $phone=$session->get('sessionObj')->input_testing($request->request->get('phone'));
+                        $postcode=$session->get('sessionObj')->input_testing($request->request->get('postcode'));
+                        $password=$session->get('sessionObj')->input_testing($request->request->get('password'));
                         $res = $session->get('sessionObj')->register(
-                            $request->request->getAlpha('username'),
-                            $request->request->get('email'),
-                            $request->request->get('phone'),
-                            $request->request->get('postcode'),
-                            $request->request->get('password'),
+                            $username,
+                            $email,
+                            $phone,
+                            $postcode,
+                            $password,
                             $request->request->get('csrf')
                         );
                         if ($res === true) {
@@ -90,9 +95,11 @@ elseif ($request->cookies->has('PHPSESSID')) {
             }
         } elseif ($request->query->getAlpha('action') == 'login') {
             if ($request->request->has('username') and $request->request->has('password')) {
+                $username=$session->get('sessionObj')->input_testing($request->request->getAlpha('username'));
+                $password=$session->get('sessionObj')->input_testing($request->request->get('password'));
                 $res = $session->get('sessionObj')->login(
-                    $request->request->get('username'),
-                    $request->request->get('password')
+                    $username,
+                    $password
                 );
                 if ($res === false) {
                     $response->setContent(json_encode($request->request));
@@ -135,14 +142,19 @@ elseif ($request->cookies->has('PHPSESSID')) {
                         $request->request->has('password') and
                         $request->request->has('password2')
                     ) {
+                        $username=$session->get('sessionObj')->input_testing($request->request->getAlpha('username'));
+                        $email=$session->get('sessionObj')->input_testing($request->request->get('email'));
+                        $phone=$session->get('sessionObj')->input_testing($request->request->get('phone'));
+                        $postcode=$session->get('sessionObj')->input_testing($request->request->get('postcode'));
+                        $password=$session->get('sessionObj')->input_testing($request->request->get('password'));
                         $res = $session->get('sessionObj')->update(
                             //    $res = $sqsdb->userid($request->request->get('currentusername')),
-                            $request->request->getAlpha('username'),
-                            $request->request->get('email'),
-                            $request->request->get('phone'),
-                            $request->request->get('postcode'),
-                            $request->request->get('password'),
-                            $request->request->get('csrf')
+                            $username,
+                            $email,
+                            $phone,
+                            $postcode,
+                            $password,
+                            $csrf
                         );
                         if ($res === true) {
                             $response->setStatusCode(201);
@@ -217,12 +229,18 @@ elseif ($request->cookies->has('PHPSESSID')) {
             ) {
                 $response->setStatusCode(201);
                 $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'addfood',$request->cookies->get('PHPSESSID'));
+                $foodname=$session->get('sessionObj')->input_testing($request->request->get('foodname'));
+                $price=$session->get('sessionObj')->input_testing($request->request->get('price'));
+                $description=$session->get('sessionObj')->input_testing($request->request->get('description'));
+                $options=$session->get('sessionObj')->input_testing($request->request->get('options'));                $password=$session->get('sessionObj')->input_testing($request->request->get('password'));
+                $image=$session->get('sessionObj')->input_testing($request->request->get('image'));
+
                 $res = $session->get('sessionObj')->addfood(
-                    $request->request->get('foodname'),
-                    $request->request->get('price'),
-                    $request->request->get('description'),
-                    $request->request->get('options'),
-                    $request->request->get('image')
+                    $foodname,
+                    $price,
+                    $description,
+                    $options,
+                    $image
                 );
                 if ($res === true) {
                     $response->setStatusCode(201);
@@ -255,13 +273,19 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $request->request->has('image') and
                 $request->request->has('options')
             ) {
+                $F_ID=$session->get('sessionObj')->input_testing($request->request->get('F_ID'));
+                $foodname=$session->get('sessionObj')->input_testing($request->request->get('foodname'));
+                $price=$session->get('sessionObj')->input_testing($request->request->get('price'));
+                $description=$session->get('sessionObj')->input_testing($request->request->get('description'));
+                $options=$session->get('sessionObj')->input_testing($request->request->get('options'));                $password=$session->get('sessionObj')->input_testing($request->request->get('password'));
+                $image=$session->get('sessionObj')->input_testing($request->request->get('image'));
                 $res = $session->get('sessionObj')->updatefood(
-                    $request->request->get('F_ID'),
-                    $request->request->get('foodname'),
-                    $request->request->get('price'),
-                    $request->request->get('description'),
-                    $request->request->get('options'),
-                    $request->request->get('image')
+                    $F_ID,
+                    $foodname,
+                    $price,
+                    $description,
+                    $options,
+                    $image
                 );
                 if ($res === true) {
                     $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'update food',$request->cookies->get('PHPSESSID'));
@@ -293,12 +317,16 @@ elseif ($request->cookies->has('PHPSESSID')) {
             }
         } elseif ($request->query->getAlpha('action') == 'checkout') {
             $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'checkout',$request->cookies->get('PHPSESSID'));
+            $cname=$session->get('sessionObj')->input_testing($request->request->get('cname'));
+            $ccnum=$session->get('sessionObj')->input_testing($request->request->get('ccnum'));
+            $expmonth=$session->get('sessionObj')->input_testing($request->request->get('expmonth'));
+            $cvv=$session->get('sessionObj')->input_testing($request->request->get('cvv'));
             $res = $session->get('sessionObj')->checkout(
-                $request->request->get('cname'),
-                $request->request->get('ccnum'),
-                $request->request->get('expmonth'),
-                $request->request->get('expyear'),
-                $request->request->get('cvv')
+                $cname,
+                $ccnum,
+                $expmonth,
+                $expyear,
+                $cvv
             );
             if ($res === true) {
                 $response->setStatusCode(201);
@@ -332,13 +360,18 @@ elseif ($request->cookies->has('PHPSESSID')) {
                        $request->request->has('password') and
                        $request->request->has('password2')
                    ) {
+                    $username=$session->get('sessionObj')->input_testing($request->request->getAlpha('username'));
+                    $email=$session->get('sessionObj')->input_testing($request->request->get('email'));
+                    $phone=$session->get('sessionObj')->input_testing($request->request->get('phone'));
+                    $postcode=$session->get('sessionObj')->input_testing($request->request->get('postcode'));
+                    $password=$session->get('sessionObj')->input_testing($request->request->get('password'));
                        $res = $session->get('sessionObj')->registeradmin(
-                           $request->request->getAlpha('username'),
-                           $request->request->get('email'),
-                           $request->request->get('phone'),
-                           $request->request->get('postcode'),
-                           $request->request->get('password'),
-                           $request->request->get('csrf')
+                           $username,
+                           $email,
+                           $phone,
+                           $postcode,
+                           $password,
+                           $csrf
                        );
                        if ($res === true) {
                            $response->setStatusCode(201);
@@ -389,14 +422,19 @@ elseif ($request->cookies->has('PHPSESSID')) {
                        $request->request->has('password') and
                        $request->request->has('password2')
                    ) {
+                    $username=$session->get('sessionObj')->input_testing($request->request->getAlpha('username'));
+                    $email=$session->get('sessionObj')->input_testing($request->request->get('email'));
+                    $phone=$session->get('sessionObj')->input_testing($request->request->get('phone'));
+                    $postcode=$session->get('sessionObj')->input_testing($request->request->get('postcode'));
+                    $password=$session->get('sessionObj')->input_testing($request->request->get('password'));
                        $res = $session->get('sessionObj')->adminupdate(
                            //    $res = $sqsdb->userid($request->request->get('currentusername')),
-                           $request->request->getAlpha('username'),
-                           $request->request->get('email'),
-                           $request->request->get('phone'),
-                           $request->request->get('postcode'),
-                           $request->request->get('password'),
-                           $request->request->get('csrf')
+                           $username,
+                           $email,
+                           $phone,
+                           $postcode,
+                           $password,
+                           $csrf
                        );
                        if ($res === true) {
                            $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'edit profile',$request->cookies->get('PHPSESSID'));
@@ -434,13 +472,19 @@ elseif ($request->cookies->has('PHPSESSID')) {
                         $request->request->has('usertype')
                     ){
                         $response->setStatusCode(201);
+                        $username=$session->get('sessionObj')->input_testing($request->request->getAlpha('username'));
+                        $email=$session->get('sessionObj')->input_testing($request->request->get('email'));
+                        $phone=$session->get('sessionObj')->input_testing($request->request->get('phone'));
+                        $postcode=$session->get('sessionObj')->input_testing($request->request->get('postcode'));    
+                        $password=$session->get('sessionObj')->input_testing($request->request->get('password'));
+                        $usertype=$session->get('sessionObj')->input_testing($request->request->get('usertype'));
                         $res = $session->get('sessionObj')->adduser(
-                            $request->request->getAlpha('username'),
-                            $request->request->get('email'),
-                            $request->request->get('phone'),
-                            $request->request->get('postcode'),
-                            $request->request->get('password'),
-                            $request->request->get('usertype')
+                            $username,
+                            $email,
+                            $phone,
+                            $postcode,
+                            $password,
+                            $usertype
                         );
                         if ($res === true) {
                             $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'adduser',$request->cookies->get('PHPSESSID'));
@@ -485,14 +529,20 @@ elseif ($request->cookies->has('PHPSESSID')) {
                         $request->request->has('password') and 
                         $request->request->has('usertype')
                     ) {
+                        $username=$session->get('sessionObj')->input_testing($request->request->getAlpha('username'));
+                        $email=$session->get('sessionObj')->input_testing($request->request->get('email'));
+                        $phone=$session->get('sessionObj')->input_testing($request->request->get('phone'));
+                        $postcode=$session->get('sessionObj')->input_testing($request->request->get('postcode'));    
+                        $password=$session->get('sessionObj')->input_testing($request->request->get('password'));
+                        $usertype=$session->get('sessionObj')->input_testing($request->request->get('usertype'));
                         $res = $session->get('sessionObj')->updateuser(
                             $request->request->get('CustomerID'),
-                            $request->request->getAlpha('username'),
-                                $request->request->get('email'),
-                                $request->request->get('phone'),
-                                $request->request->get('postcode'),
-                                $request->request->get('password'),
-                                $request->request->get('usertype')
+                            $username,                                
+                            $email,
+                                $phone,
+                                $postcode,
+                                $password,
+                                $usertype
                         );
                         if ($res === true) {
                             $response->setStatusCode(201);

@@ -3,17 +3,17 @@
 class sqsSession
 {
     //========================userfunction============================
-    private $last_visit = 0;
-    private $last_visits = array();
+    private $last_visit = Array();
+    private $all_visit = Array();
     private $CustomerID = 0;
     private $username;
     private $email;
     private $phone;
     private $user_token;
     private $interval = 86400;
-    private $limit = 500;
+    private $limit = 1000;
     private $count = 0;
-    public function getClientIp() {
+    /*public function getClientIp() {
         $ipaddress = '';
         if (isset($_SERVER['HTTP_CLIENT_IP']))
             $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
@@ -30,7 +30,7 @@ class sqsSession
         else
             $ipaddress = 'UNKNOWN';
         return $ipaddress;
-    }
+    }*/
     
     public function input_testing($data)
     {
@@ -49,7 +49,7 @@ class sqsSession
             $this->last_visit = time();
             return false;
         }
-        if ($this->last_visit == time()+0.5) {
+        if ($this->last_visit == time()+1) {
             return true;
         }
         return false;
