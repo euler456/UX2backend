@@ -110,7 +110,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 } elseif (count($res) > 1) {
                     $response->setStatusCode(200);
                     $response->setContent(json_encode($res));
-                    $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'login',$request->cookies->get('PHPSESSID'));
+                    $res =$session->get('sessionObj')->logEvent($this->request->getClientIp(),'login',$request->cookies->get('PHPSESSID'));
                 }
             } else {
                 $response->setContent(json_encode($request));
@@ -125,7 +125,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $response->setContent(json_encode($res));
             }
         } elseif ($request->query->getAlpha('action') == 'update') {
-            $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'update',$request->cookies->get('PHPSESSID'));
+            $res =$session->get('sessionObj')->logEvent($this->request->getClientIp(),'update',$request->cookies->get('PHPSESSID'));
             $res = $session->get('sessionObj')->isLoggedIn();
             if (($request->request->has('username')) && (count($res) == 1)) {
                 $res = $sqsdb->userExists($request->request->get('username'));
@@ -173,7 +173,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
             $response->setContent(json_encode($res));
             $response->setStatusCode(200);
         } elseif ($request->query->getAlpha('action') == 'orderdelete') {
-            $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'orderdelete',$request->cookies->get('PHPSESSID'));
+            $res =$session->get('sessionObj')->logEvent($this->request->getClientIp(),'orderdelete',$request->cookies->get('PHPSESSID'));
             $res = $session->get('sessionObj')->orderdelete(
                 $request->request->get('orderitem_ID')
             );
@@ -185,7 +185,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $response->setStatusCode(500);
             }
         } elseif ($request->query->getAlpha('action') == 'orderquantity') {
-            $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'orderfood',$request->cookies->get('PHPSESSID'));
+            $res =$session->get('sessionObj')->logEvent($this->request->getClientIp(),'orderfood',$request->cookies->get('PHPSESSID'));
             if (
                 $request->request->has('F_ID') and
                 $request->request->has('foodname') and
@@ -228,7 +228,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $request->request->has('options')
             ) {
                 $response->setStatusCode(201);
-                $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'addfood',$request->cookies->get('PHPSESSID'));
+                $res =$session->get('sessionObj')->adminlogEvent($this->request->getClientIp(),'addfood',$request->cookies->get('PHPSESSID'));
                 $foodname=$session->get('sessionObj')->input_testing($request->request->get('foodname'));
                 $price=$session->get('sessionObj')->input_testing($request->request->get('price'));
                 $description=$session->get('sessionObj')->input_testing($request->request->get('description'));
@@ -257,7 +257,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $request->request->get('F_ID')
             );
             if ($res === true) {
-                $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'delete food',$request->cookies->get('PHPSESSID'));
+                $res =$session->get('sessionObj')->adminlogEvent($this->request->getClientIp(),'delete food',$request->cookies->get('PHPSESSID'));
                 $response->setStatusCode(201);
             } elseif ($res === false) {
                 $response->setStatusCode(403);
@@ -288,7 +288,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                     $image
                 );
                 if ($res === true) {
-                    $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'update food',$request->cookies->get('PHPSESSID'));
+                    $res =$session->get('sessionObj')->adminlogEvent($this->request->getClientIp(),'update food',$request->cookies->get('PHPSESSID'));
                     $response->setStatusCode(201);
                 } elseif ($res === false) {
                     $response->setStatusCode(403);
@@ -306,7 +306,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 $res = $session->get('sessionObj')->createorder();
                 if ($res === true) {
                     $response->setStatusCode(201);
-                    $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'start order',$request->cookies->get('PHPSESSID'));
+                    $res =$session->get('sessionObj')->logEvent($this->request->getClientIp(),'start order',$request->cookies->get('PHPSESSID'));
                 } elseif ($res === false) {
                     $response->setStatusCode(403);
                 } elseif ($res === 0) {
@@ -316,7 +316,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                 }
             }
         } elseif ($request->query->getAlpha('action') == 'checkout') {
-            $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'checkout',$request->cookies->get('PHPSESSID'));
+            $res =$session->get('sessionObj')->logEvent($this->request->getClientIp(),'checkout',$request->cookies->get('PHPSESSID'));
             $cname=$session->get('sessionObj')->input_testing($request->request->get('cname'));
             $ccnum=$session->get('sessionObj')->input_testing($request->request->get('ccnum'));
             $expmonth=$session->get('sessionObj')->input_testing($request->request->get('expmonth'));
@@ -398,7 +398,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                    $response->setStatusCode(203);
                    $response->setContent(json_encode($res));
                } elseif (count($res) > 1) {
-                   $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'admin login',$request->cookies->get('PHPSESSID'));
+                   $res =$session->get('sessionObj')->adminlogEvent($this->request->getClientIp(),'admin login',$request->cookies->get('PHPSESSID'));
                    $response->setStatusCode(200);
                    $response->setContent(json_encode($res));
                }
@@ -437,7 +437,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                            $csrf
                        );
                        if ($res === true) {
-                           $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'edit profile',$request->cookies->get('PHPSESSID'));
+                           $res =$session->get('sessionObj')->adminlogEvent($this->request->getClientIp(),'edit profile',$request->cookies->get('PHPSESSID'));
                            $response->setStatusCode(201);
                        } elseif ($res === false) {
                            $response->setStatusCode(403);
@@ -487,7 +487,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                             $usertype
                         );
                         if ($res === true) {
-                            $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'adduser',$request->cookies->get('PHPSESSID'));
+                            $res =$session->get('sessionObj')->adminlogEvent($this->request->getClientIp(),'adduser',$request->cookies->get('PHPSESSID'));
                             $response->setStatusCode(201);
                         } elseif ($res === false) {
                             $response->setStatusCode(403);
@@ -507,7 +507,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                         $request->request->get('CustomerID')
                     );
                     if ($res === true) {
-                        $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'delete user',$request->cookies->get('PHPSESSID'));
+                        $res =$session->get('sessionObj')->adminlogEvent($this->request->getClientIp(),'delete user',$request->cookies->get('PHPSESSID'));
                         $response->setStatusCode(201);
                     } elseif ($res === false) {
                         $response->setStatusCode(403);
@@ -546,7 +546,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
                         );
                         if ($res === true) {
                             $response->setStatusCode(201);
-                            $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'update user',$request->cookies->get('PHPSESSID'));
+                            $res =$session->get('sessionObj')->adminlogEvent($this->request->getClientIp(),'update user',$request->cookies->get('PHPSESSID'));
                         } elseif ($res === false) {
                             $response->setStatusCode(403);
                         } elseif ($res === 0) {
@@ -574,14 +574,14 @@ elseif ($request->cookies->has('PHPSESSID')) {
             }
         } elseif ($request->query->getAlpha('action') == 'logout') {
            
-            $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'logout',$request->cookies->get('PHPSESSID'));
+            $res =$session->get('sessionObj')->logEvent($this->request->getClientIp(),'logout',$request->cookies->get('PHPSESSID'));
             $session->get('sessionObj')->logout();
             $response->setStatusCode(200);
            
         } 
         elseif ($request->query->getAlpha('action') == 'adminlogout') {
            
-            $res =$session->get('sessionObj')->adminlogEvent($request->getClientIp(),'logout',$request->cookies->get('PHPSESSID'));
+            $res =$session->get('sessionObj')->adminlogEvent($this->request->getClientIp(),'logout',$request->cookies->get('PHPSESSID'));
             $session->get('sessionObj')->logout();
             $response->setStatusCode(200);
            
@@ -589,7 +589,7 @@ elseif ($request->cookies->has('PHPSESSID')) {
         elseif ($request->query->getAlpha('action') == 'orderID') {
             $res = $session->get('sessionObj')->orderID();
         } elseif ($request->query->getAlpha('action') == 'sumtotalprice') {
-            $res =$session->get('sessionObj')->logEvent($request->getClientIp(),'complete order',$request->cookies->get('PHPSESSID'));
+            $res =$session->get('sessionObj')->logEvent($this->request->getClientIp(),'complete order',$request->cookies->get('PHPSESSID'));
             $res = $session->get('sessionObj')->sumtotalprice();
             if ($res === true) {
                 $response->setStatusCode(201);
