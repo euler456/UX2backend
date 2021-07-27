@@ -47,12 +47,12 @@ class sqsSession
     {
         if ($this->last_visit == 0) {
             $this->last_visit = time();
-            return false;//true
+            return false;
         }
         if ($this->last_visit <= time()-1) {
-            return true;//false
+            return true;
         }
-        return false;//true
+        return false;
     }
     public function day_rate_limited()
     {
