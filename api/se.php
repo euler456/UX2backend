@@ -3,7 +3,7 @@
 class sqsSession
 {
     //========================userfunction============================
-    private $last_visit = Array();
+    private $last_visit = 0;
     private $all_visit = Array();
     private $CustomerID = 0;
     private $username;
@@ -47,12 +47,12 @@ class sqsSession
     {
         if ($this->last_visit == 0) {
             $this->last_visit = time();
-            return false;
+            return false;//true
         }
-        if ($this->last_visit == time()+1) {
-            return true;
+        if ($this->last_visit <= time()-1) {
+            return true;//false
         }
-        return false;
+        return false;//true
     }
     public function day_rate_limited()
     {
